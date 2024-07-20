@@ -22,6 +22,7 @@ const MemoryGame = () => {
     }))
     setPokemon(pokemonData);
     setCards(shuffle([...pokemonData]));
+
 };
   useEffect(() => {
     fetchPokemon();
@@ -105,8 +106,9 @@ const MemoryGame = () => {
             onClick={() => handleCardClick(index)}
           >
             <div className="card-inner">
-                  <img src={card.image} alt={card.name} />
-        
+              <div className="card-front">
+                <img src={card.image} alt={card.name} />
+              </div>
               <div className="card-back">
                 <img src="https://imageplaceholder.net/200x200/4fe8b8/4fe8b8" alt="Card Back" />
               </div>
