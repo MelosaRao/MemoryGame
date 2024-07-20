@@ -9,6 +9,7 @@ const MemoryGame = () => {
   const [gameOver, setGameOver] = useState(false);
   const [flipped, setFlipped] = useState(false);
   const [win, setWin] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const fetchPokemon = async () => {
     const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=10');
@@ -22,7 +23,7 @@ const MemoryGame = () => {
     }))
     setPokemon(pokemonData);
     setCards(shuffle([...pokemonData]));
-
+    setLoading(false)
 };
   useEffect(() => {
     fetchPokemon();
@@ -106,9 +107,11 @@ const MemoryGame = () => {
             onClick={() => handleCardClick(index)}
           >
             <div className="card-inner">
-              <div className="card-front">
-                <img src={card.image} alt={card.name} />
-              </div>
+            {loading ? (
+                <img src="https://imageplaceholder.net/200x200/4fe8b8/4fe8b8" alt="Loding" />
+                ) : (
+                  <img src={card.image} alt={card.name} />
+                )}
               <div className="card-back">
                 <img src="https://imageplaceholder.net/200x200/4fe8b8/4fe8b8" alt="Card Back" />
               </div>
