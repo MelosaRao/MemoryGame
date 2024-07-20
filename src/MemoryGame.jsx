@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 const MemoryGame = () => {
   const [pokemon, setPokemon] = useState([]);
@@ -11,18 +10,21 @@ const MemoryGame = () => {
   const [flipped, setFlipped] = useState(false);
   const [win, setWin] = useState(false);
 
-  useEffect(() => {
-    const fetchPokemon = async () => {
-      const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=10');
-      const results = response.data.results;
-      const pokemonData = await Promise.all(results.map(async (pokemon) => {
-        const pokeDetails = await axios.get(pokemon.url);
-        return { name: pokemon.name, image: pokeDetails.data.sprites.front_default };
-      }));
-      setPokemon(pokemonData);
-      setCards(shuffle([...pokemonData]));
-    };
+  const fetchPokemon = async () => {
+    const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=10');
+    const data = await response.json();
+    const results = data.results;
+    const pokemonData = await Promise.all(results.map(async (pokemon) => {
+      const pokeDetailsResponse = await fetch(pokemon.url);
+      const pokeDetails = await pokeDetailsResponse.json();
+      return { name: pokemon.name, image: pokeDetails.sprites.front_default };
+      
+    }))
+    setPokemon(pokemonData);
+    setCards(shuffle([...pokemonData]));
 
+};
+  useEffect(() => {
     fetchPokemon();
   }, []);
 
