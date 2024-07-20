@@ -81,7 +81,7 @@ const MemoryGame = () => {
   return (
     <>
     <h1>Memory Game</h1>
-    <p>Click on new card to earn a point. If you click on the same card twice the game ends.</p>
+    <h3>Click on new card to earn a point. If you click on the same card twice the game ends. Check your score!</h3>
     <div className="memory-game">
       <div className="highest-score">
         <h2>Highest Score: {Math.max(highestScore,score)} Score:{score}</h2>
